@@ -1,0 +1,7 @@
+{
+  "name": "cosmos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
