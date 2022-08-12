@@ -1,0 +1,137 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Menu Items</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-segment [formControl]="activeSegment">
+ <!--  <ion-segment-button value="cat" >
+    <ion-tab-button>
+      <ion-icon name="add"></ion-icon>
+    <ion-label>{{'Add Category'}}</ion-label>
+  </ion-tab-button>
+  </ion-segment-button> -->
+  <ion-segment-button value="menu" >
+    <ion-tab-button>
+      <ion-icon name="add"></ion-icon>
+    <ion-label>{{'Add Menu'}}</ion-label>
+  </ion-tab-button>
+  </ion-segment-button>
+  <ion-segment-button value="list" (click)="getMenu()">
+    <ion-tab-button>
+      <ion-icon name="list"></ion-icon>
+    <ion-label>{{'Menu List'}}</ion-label>
+  </ion-tab-button>
+  </ion-segment-button>
+  </ion-segment>
+<ion-content>
+  <div *ngIf="activeSegment.value==='menu'">
+  <form [formGroup]="form">
+    <ng-container>
+
+      <ion-item>
+        <ion-label position="floating" class="ion-text-center">Add Food Category</ion-label>
+          <ion-select placeholder="Add Category"  formControlName="category" interface="action-sheet">
+           <ion-select-option *ngFor="let a of category" value="{{a}}">{{a}}</ion-select-option>
+        </ion-select>
+        </ion-item>
+      
+          <ion-item>
+            <ion-label position="floating" class="ion-text-center">Add Food Name</ion-label>
+            <ion-input type="text" placeholder="Add Food Name" shape="round" formControlName="foodname"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating" class="ion-text-center">Add Food Price</ion-label> 
+            <ion-input type="number" placeholder="Price" formControlName="price"></ion-input>
+    
+          </ion-item>
+          
+          
+
+
+           <!--  <ion-item>
+              <ion-label position="floating" class="ion-text-center">Add Food Description</ion-label> 
+                <ion-textarea placeholder="Add Food Description" formControlName="description" ></ion-textarea> 
+            </ion-item> -->
+            
+            <ion-item>
+              <ion-label position="floating" class="ion-text-center">Add Food Image</ion-label> 
+              
+              <ion-item class="image-upload ion-text-center">
+                <label for="file-input">            
+                  <ion-icon slot="icon-only" name="image" size="large"  color="medium" ></ion-icon>
+                </label>
+            
+                <input id="file-input" type="file" accept="image/*" (change)="onFileChange($any($event).target.files)" style="display:none;"/>
+              
+              </ion-item>
+            
+            </ion-item>
+           
+            
+      
+           
+    
+  
+      <ion-col size="4">
+        <div class="img-bg" *ngFor="let file of fileArr; let i = index">
+          <img [src]="sanitize(file['url'])" alt="" />
+        <div class="ion-text-center" style="color: red;" (click)="deleteImage(i)">
+            <small>X</small>
+        </div>
+        </div>
+        </ion-col>
+      
+       
+    
+      
+     
+    </ng-container>
+    </form>
+    <ion-footer>
+      <div class="ion-text-center">
+        <ion-button (click)="asubmitForm()" expand="block" shape="round">Post</ion-button>
+      </div>
+    </ion-footer>
+</div>
+
+<div *ngIf="activeSegment.value==='list'">
+  <ion-searchbar [(ngModel)]="filterterm"></ion-searchbar>
+  <div *ngIf="load" class="ion-text-center">
+    <ion-spinner name="lines"></ion-spinner>
+  </div>
+  <ion-item *ngFor="let i of items" (click)="click()">
+    <ion-avatar slot="start">
+      <img [src]="server+i.image" alt=""/>
+    </ion-avatar>
+    <ion-label>
+      <h3>{{i.foodname}}</h3>
+      <h3>GH₵{{i.price}}</h3> 
+      <h3>{{i.category}}</h3>
+      
+    </ion-label>
+   <!--  <ion-buttons slot="end">
+      <ion-button color="warning">
+        {{i.status}}
+      </ion-button>
+    </ion-buttons> -->
+  </ion-item>
+  <div *ngIf="!load && items.length == 0">
+    <ion-note class="ion-text-center">No Items Found</ion-note>
+  </div>
+ </div>
+ <div *ngIf="activeSegment.value==='cat'">
+  <ion-item>
+    <ion-label position="floating" class="ion-text-center">Add Food Category</ion-label>
+      <ion-input placeholder="Add Category"  formControlName="category">
+       
+    </ion-input>
+    </ion-item>
+    <ion-button class="ion-padding-left" type="submit">Add</ion-button>
+  </div>
+</ion-content>
+
+    

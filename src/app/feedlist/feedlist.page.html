@@ -1,0 +1,124 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close" color="success">
+
+      </ion-icon> </ion-button>
+    </ion-buttons>
+    <ion-title>{{val}}</ion-title>
+  </ion-toolbar>
+  <ion-segment [formControl]="activeSegment" scrollX="true">
+    <ion-segment-button value="complain" *ngIf="val==='complain'">
+      <ion-tab-button>
+        <ion-icon name="chatbubbles"></ion-icon>
+      <ion-label>{{'Complain'}}</ion-label>
+    </ion-tab-button>
+     </ion-segment-button>
+    <ion-segment-button value="suggestion" *ngIf="val==='suggestion'">
+      <ion-tab-button>
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+      <ion-label>{{'Suggestion'}}</ion-label>
+    </ion-tab-button>
+    </ion-segment-button>
+    <ion-segment-button value="customers" *ngIf="val==='customers'">
+      <ion-tab-button>
+        <ion-icon name="person-outline"></ion-icon>
+      <ion-label>{{'Customer Base'}}</ion-label>
+    </ion-tab-button>
+    
+    </ion-segment-button>
+   
+     </ion-segment>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="val === 'suggestion'">
+    <ion-card class="post-list-card" *ngFor="let message of suggest;">
+      <ion-item lines="none" >
+        <ion-avatar slot="start">
+          <img src="./assets/images/client1.png" width="96px">
+        </ion-avatar>
+        <ion-label>
+          {{message.title}}  from {{message.phone}}
+          <p>{{message.date}} {{message.time}}</p>
+        </ion-label>
+       
+      </ion-item>
+      <ion-card-content class="post-list-content">
+        
+        {{message.message}}
+      
+      
+    </ion-card-content>
+    <ion-item lines="none" class="ion-no-padding" style="margin-left: 10px;">
+    <ion-buttons slot="start">
+       
+      <a href="tel:{{message.phone}}"> 
+        <ion-icon slot="icon-only" md="call" ios="call"></ion-icon></a>
+        <ion-button color="medium" (click)="sendSms(message)">
+          <ion-icon name="mail-outline"></ion-icon>
+        </ion-button>
+    </ion-buttons>
+    </ion-item>
+      </ion-card>
+    </div>
+    <div *ngIf="val === 'complain'">
+      <ion-card class="post-list-card" *ngFor="let message of complain;">
+        <ion-item lines="none" >
+          <ion-avatar slot="start">
+            <img src="./assets/images/client1.png" width="96px">
+          </ion-avatar>
+          <ion-label class="ion-text-capitalised">
+            {{message.title}}  from {{message.phone}}
+            <p>{{message.date}} {{message.time}}</p>
+          </ion-label>
+          
+        </ion-item>
+        <ion-card-content class="post-list-content">
+        
+            {{message.message}}
+          
+          
+        </ion-card-content>
+        <ion-item lines="none" class="ion-no-padding" style="margin-left: 10px;">
+        <ion-buttons slot="start">
+           
+          <a href="tel:{{message.phone}}"> 
+            <ion-icon slot="icon-only" md="call" ios="call"></ion-icon></a>
+            <ion-button color="medium" (click)="sendSms(message)">
+              <ion-icon name="mail-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        </ion-item>
+        </ion-card>
+      </div>
+      <div *ngIf="val === 'customers' ">
+        <ion-item *ngFor="let i of cusval">
+          <ion-avatar slot="start">
+            <img src="./assets/images/client1.png" width="96px">
+          </ion-avatar>
+          <ion-label>
+            <h3 class="mb-0"><strong>{{i.cusname}}</strong></h3>
+            <h3>{{i.cusnum}}</h3> 
+            <h3>Total Points:    {{i.points}}</h3>
+            <p>Last Visit: {{timeFromNow(i.lastdate)}}</p>
+          </ion-label>
+          <ion-item lines="none" class="ion-no-padding" style="margin-left: 10px;">
+          <ion-buttons slot="start">
+           
+            <a href="tel:{{i.cusnum}}"> 
+              <ion-icon slot="icon-only" md="call" ios="call"></ion-icon></a>
+              <ion-button color="medium" (click)="sendSms(i)">
+                <ion-icon name="mail-outline"></ion-icon>
+              </ion-button>
+          </ion-buttons>
+        </ion-item>
+        </ion-item>
+        <div *ngIf="cusval.length == 0">
+          <ion-note class="ion-text-center">No Data Found</ion-note>
+        </div>
+      </div>
+  
+
+</ion-content>

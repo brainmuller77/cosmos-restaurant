@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+ url: 'http://localhost/cosmos/server/',
+  server: 'http://localhost/cosmos/server/',
+ //url: 'https://pawachat.com/restaurant/server/',
+//server: 'https://pawachat.com/restaurant/server/',
+//url: 'https://booking.pawachat.com/server/',
+ // server: 'https://booking.pawachat.com/server/',
+
 };
 
 /*

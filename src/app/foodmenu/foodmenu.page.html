@@ -1,0 +1,232 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title *ngIf="basket.length == 0">Kings Bite </ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/dashboard']"><ion-icon name="person"></ion-icon></ion-button>
+      <ion-button (click)="register()"><ion-icon name="person-circle"></ion-icon></ion-button>
+
+    </ion-buttons>
+    <div class="ion-text-center" *ngIf="basket.length > 0">Total Cost: {{(cartTotal)}}</div>
+  </ion-toolbar>
+  <ion-segment [formControl]="activeSegment" scrollX="true">
+    <ion-segment-button value="menu">
+      <ion-tab-button>
+        <ion-icon name="list"></ion-icon>
+      <ion-label>{{'Menu List'}}</ion-label>
+    </ion-tab-button>
+    </ion-segment-button>
+    <ion-segment-button value="order">
+      <ion-tab-button>
+        <ion-icon name="cart"></ion-icon>
+      <ion-label>{{'Cart'}}</ion-label>
+      <ion-badge color="danger" class="badge">{{basket.length}}</ion-badge>
+      <ion-label>{{(cartTotal)}}</ion-label>
+    </ion-tab-button>
+    </ion-segment-button>
+    <ion-segment-button value="feed">
+      <ion-tab-button>
+        <ion-icon name="reader"></ion-icon>
+      <ion-label>{{'Give Feedback'}}</ion-label>
+    </ion-tab-button>
+     </ion-segment-button>
+     </ion-segment>
+
+</ion-header>
+
+<ion-content>
+
+     <div *ngIf="activeSegment.value==='menu'">
+    <section class="food_section layout_padding-bottom">
+      <div class="container">
+        <div class="heading_container heading_center">
+          <img src="assets/images/kingsbite.jpeg">
+        </div>
+  <ion-searchbar [(ngModel)]="filterterm"></ion-searchbar>
+        <ul class="filters_menu" >
+          <ion-chip class="active" color="primary" (click)="sser()">{{show?'Click to Close Categories':'Click to Open Categories'}}</ion-chip>
+          <div *ngIf="show">
+            <ion-card>
+            <ion-chip *ngFor="let a of category" class="ion-text-capitalize" (click)="hi(a)">{{a}}</ion-chip>
+          </ion-card>
+          </div>
+        
+        </ul>
+  
+        <div class="filters-content">
+          <div class="row grid">
+            <div class="col-sm-6 col-lg-4 all pasta" *ngFor="let a of items|filter:filterterm">
+              <div class="box">
+                <div>
+                  <div class="img-box">
+                    <img [src]="server+a.image" alt="" (error)="serveService.imgError($event)">
+                  </div>
+                  <div class="detail-box">
+                    <h5>
+                     {{a.foodname}}
+                    </h5>
+                    <p>
+                    {{a.category}} 
+                    </p>
+                    <div class="options">
+                      <h6>
+                     GH₵{{a.price}}
+                      </h6>
+                     <ion-buttons slot="end">
+                        
+                        <ion-label>Order Qty</ion-label>
+                        <ion-button color="success" (click)="add(a)">
+                          <ion-icon name="add"></ion-icon>
+                        </ion-button>
+                        <ion-button>{{a.quantity}}</ion-button>
+                       
+                        <ion-button color="contrast" (click)="reduce(a)">
+                          <ion-icon name="remove"></ion-icon>
+                        </ion-button>
+                        
+                      </ion-buttons>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="btn-box">
+          <a href="">
+            View More
+          </a>
+        </div> -->
+      </div>
+    </section>
+  
+    <!-- end food section -->
+  
+    <!-- about section -->
+  
+    <section class="about_section layout_padding">
+      <div class="container  ">
+  
+        <div class="row">
+          <div class="col-md-6 ">
+            <div class="img-box">
+              <img src="assets/images/about-img.png" alt="">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="detail-box">
+              <div class="heading_container">
+                <h2>
+                  We Are Dedolph
+                </h2>
+              </div>
+              <p>
+              We are a software development company whose mission is to ensure the success of every business entity.
+              Our agile team of software developers are always thinking out of the box and have you in mind. We know the
+              time spent and the money invested into your business so we will stay with you to get your work efficiently and 
+              effectively delivered to your customers.
+              </p>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- end about section -->
+  
+  
+  
+    <!-- client section -->
+  </div>
+  <div *ngIf="activeSegment.value === 'feed'">
+    <section class="client_section layout_padding-bottom">
+      <div class="container">
+        <div class="heading_container heading_center psudo_white_primary mb_45">
+          <h2>
+           We love to hear your feedback
+          </h2>
+        </div>
+        <form [formGroup]="form">
+          <ion-item>
+          <ion-row>
+          <ion-textarea placeholder="Give Us Your feedback" formControlName="body" ></ion-textarea>
+       </ion-row>
+       
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Phone number</ion-label>
+        <ion-row>
+          <ion-input type="text" placeholder="Phone number" formControlName="number"></ion-input>
+         </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Choose One</ion-label>
+        <ion-select placeholder="Choose One"  formControlName="title">
+          <ion-select-option value="">Choose One</ion-select-option>
+          <ion-select-option value="suggestions">Suggestion</ion-select-option>
+          <ion-select-option value="complain">Complaints</ion-select-option>
+        
+      </ion-select>
+      </ion-item>
+      
+        <div class="ion-text-center">
+        <ion-button shape="round" (click)="feedback()"  color="tertiary" expand="block">
+          Send<ion-spinner name="lines" *ngIf="load"></ion-spinner></ion-button>
+        </div>
+      
+       
+          </form>
+       </div>
+       </section>
+       </div>
+       <div *ngIf="activeSegment.value === 'order'">
+        <div style="overflow-x:auto;">
+          <div class="c-table-responsive@wide" style="background-color:white">
+            <div style="min-height: 450px !important;">
+              <table class="table">
+                <thead class="table-hover">
+                  <tr class="table-row">
+                    <th class="table-row">Product</th>
+                    <th class="table-row">Quantity</th>
+                    <th class="">Change Qty</th>
+                    <th class="table-row">Cost</th>
+                   
+                  </tr>
+                 
+                </thead>
+                <tbody *ngIf="basket != ''">
+                  <tr class="table-row" *ngFor="let x of basket">
+                    <td class="c-table__cell text-center">{{ x.foodname}}</td>
+                    <td class="c-table__cell text-center">{{ x.quantity }}</td>
+                    <td class="c-table__cell">
+                      <ion-buttons slot="start">
+                      <ion-button class="c-btn c-btn--info c-btn--small action-btn" (click)="add(x)">
+                        <ion-icon name="add"></ion-icon>
+                      </ion-button>
+                      <ion-button class="c-btn c-btn--warning c-btn--small action-btn" (click)="reduce(x)">
+                        <ion-icon name="remove"></ion-icon>
+                      </ion-button>
+                      <ion-button class="c-btn c-btn--danger c-btn--small action-btn" (click)="remove(x)">
+                        <ion-icon name="close"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                    </td>
+                    <td class="c-table__cell text-center">{{x.cost}}</td>
+                    </tr>
+                    </tbody>
+                    <div *ngIf="basket.length == 0" class="ion-text-center">
+                      <ion-note style="margin-left:50%;text-align:center">No Order Made</ion-note>
+                    </div>
+                </table>
+                <div class="ion-text-center" *ngIf="basket.length > 0">
+                
+                  <ion-button  expand="true" shape="round" (click)="save()"><ion-icon name="cart"></ion-icon>
+                  Order<ion-spinner name="lines" *ngIf="load"></ion-spinner></ion-button>
+                </div>
+                </div>
+                </div>
+                </div>
+       </div>
+    
+  
+</ion-content>
