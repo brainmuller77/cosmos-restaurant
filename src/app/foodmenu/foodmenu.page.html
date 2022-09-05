@@ -1,7 +1,13 @@
 <ion-header>
   <ion-toolbar color="secondary">
-    <ion-title *ngIf="basket.length == 0">Kings Bite </ion-title>
+    <ion-title *ngIf="basket.length == 0"> </ion-title>
+    <ion-buttons slot="start">
+      <ion-avatar slot="start">
+        <img src="assets/images/laequ.jpeg">
+      </ion-avatar>
+    </ion-buttons>
     <ion-buttons slot="end">
+     
       <ion-button [routerLink]="['/dashboard']"><ion-icon name="person"></ion-icon></ion-button>
       <ion-button (click)="register()"><ion-icon name="person-circle"></ion-icon></ion-button>
 
@@ -12,7 +18,7 @@
     <ion-segment-button value="menu">
       <ion-tab-button>
         <ion-icon name="list"></ion-icon>
-      <ion-label>{{'Menu List'}}</ion-label>
+      <ion-label>{{'List'}}</ion-label>
     </ion-tab-button>
     </ion-segment-button>
     <ion-segment-button value="order">
@@ -38,9 +44,9 @@
      <div *ngIf="activeSegment.value==='menu'">
     <section class="food_section layout_padding-bottom">
       <div class="container">
-        <div class="heading_container heading_center">
-          <img src="assets/images/kingsbite.jpeg">
-        </div>
+        <!-- <div class="heading_container heading_center">
+          <img src="assets/images/laequ.jpeg">
+        </div> -->
   <ion-searchbar [(ngModel)]="filterterm"></ion-searchbar>
         <ul class="filters_menu" >
           <ion-chip class="active" color="primary" (click)="sser()">{{show?'Click to Close Categories':'Click to Open Categories'}}</ion-chip>
@@ -50,7 +56,15 @@
           </ion-card>
           </div>
         
-        </ul>
+        </ul> 
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4" *ngFor="let a of category" class="ion-text-capitalize" (click)="hi(a)">
+              <ion-chip >{{a}}</ion-chip>
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
   
         <div class="filters-content">
           <div class="row grid">
@@ -171,16 +185,16 @@
       
         <div class="ion-text-center">
         <ion-button shape="round" (click)="feedback()"  color="tertiary" expand="block">
-          Send<ion-spinner name="lines" *ngIf="load"></ion-spinner></ion-button>
+          Send<ion-spinner name="lines" *ngIf="loaded"></ion-spinner></ion-button>
         </div>
       
        
           </form>
        </div>
        </section>
-       </div>
+  </div>
        <div *ngIf="activeSegment.value === 'order'">
-        <div style="overflow-x:auto;">
+        <!-- <div style="overflow-x:auto;">
           <div class="c-table-responsive@wide" style="background-color:white">
             <div style="min-height: 450px !important;">
               <table class="table">
@@ -215,16 +229,54 @@
                     </tr>
                     </tbody>
                     <div *ngIf="basket.length == 0" class="ion-text-center">
-                      <ion-note style="margin-left:50%;text-align:center">No Order Made</ion-note>
+                      <p style="margin-left:50%;text-align:center">No Order Made</p>
                     </div>
                 </table>
                 <div class="ion-text-center" *ngIf="basket.length > 0">
                 
-                  <ion-button  expand="true" shape="round" (click)="save()"><ion-icon name="cart"></ion-icon>
-                  Order<ion-spinner name="lines" *ngIf="load"></ion-spinner></ion-button>
+                  <ion-button  [disabled]="load" expand="true" shape="round" (click)="save()">
+                    
+                  {{load?'':'Order'}}<ion-spinner name="lines" *ngIf="load"></ion-spinner></ion-button>
                 </div>
                 </div>
                 </div>
+                </div> -->
+                <div *ngIf="basket.length == 0" class="ion-text-center">
+                  <p style="text-align:center">No Order Made</p>
+                </div>
+                <ion-card *ngFor="let i of basket">
+                  <ion-item >
+                    <ion-avatar slot="start">
+                      <img [src]="i.image" />
+                    </ion-avatar>
+                    <ion-label>
+                      <ion-title class="mb-0 ion-text-capitalized" >{{i.foodname}}</ion-title>
+                      <h3>Quantity:    {{i.quantity}}</h3> 
+                      <h3>Total:    {{i.cost}}</h3>
+                      
+                    </ion-label>
+                    </ion-item>
+                   <ion-item>
+                    <ion-buttons slot="start">
+                      <ion-button color="success" (click)="add(i)">
+                        <ion-icon name="add"></ion-icon>
+                      </ion-button>
+                      <ion-button color="warning" (click)="reduce(i)">
+                        <ion-icon name="remove"></ion-icon>
+                      </ion-button>
+                      <ion-button color="danger" (click)="remove(i)">
+                        <ion-icon name="close"></ion-icon>
+                      </ion-button>
+                    </ion-buttons>
+                   </ion-item>
+                  
+                </ion-card>
+
+                <div class="ion-text-center" *ngIf="basket.length > 0">
+                
+                  <ion-button  [disabled]="load" expand="true" shape="round" (click)="save()">
+                    
+                  {{load?'':'Order'}}<ion-spinner name="lines" *ngIf="load"></ion-spinner></ion-button>
                 </div>
        </div>
     

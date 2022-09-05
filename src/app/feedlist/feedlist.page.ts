@@ -5,6 +5,7 @@ import { ServiceService } from '../services/service.service';
 import { SMS } from '@awesome-cordova-plugins/sms/ngx';
 import { ToastService } from '../services/toast.service';
 import * as moment from 'moment';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-feedlist',
@@ -21,7 +22,9 @@ export class FeedlistPage implements OnInit {
     { title: 'Complaints', value: 'complain' },
     { title: 'Suggestions', value: 'suggestion' },
   ];
-  constructor(protected service:ServiceService,private sms: SMS,private alert:AlertController,
+  constructor(protected service:ServiceService,
+    private sms: SMS,private alert:AlertController,
+    private http:HttpClient,
     private modalController: ModalController,private toast:ToastService) { 
       this.activeSegment.value == this.val
     }
@@ -119,4 +122,6 @@ export class FeedlistPage implements OnInit {
       }
     })
   }
+
+  
 }

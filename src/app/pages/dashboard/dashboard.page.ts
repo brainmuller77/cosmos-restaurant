@@ -11,6 +11,15 @@ import { ServiceService } from 'src/app/services/service.service';
   styleUrls: ['./dashboard.page.scss']
 })
 export class DashboardPage implements OnInit {
+  orderstoday:number;
+  customerbase:number;
+  totalsales:number=6000;
+  salestoday:number=800;
+  suggestlength:number
+  complainlength:number
+  userheader:string = 'UserName';
+  altheader:string = 'Amount Spent';
+  
 
   public datasets: any;
   public data: any;
@@ -103,6 +112,7 @@ export class DashboardPage implements OnInit {
         for(let post of response.results){
           this.orders.push(post)
         }
+        this.orderstoday = this.orders.length
       }
     })
   }
@@ -115,6 +125,7 @@ export class DashboardPage implements OnInit {
         for(let post of response.results){
           this.customer.push(post)
         }
+        this.customerbase = this.customer.length
       }
     })
   }
@@ -129,8 +140,10 @@ export class DashboardPage implements OnInit {
         for(let post of response.results){
           if(post.title === "suggestions"){
             this.suggest.push(post)
+            this.suggestlength = this.suggest.length
           }else{
             this.complain.push(post)
+            this.complainlength = this.complain.length
           }
          
         }

@@ -12,4 +12,8 @@ export class FoodorderPage implements OnInit {
   ngOnInit() {
   }
 
+
+  gethere(){
+    console.log("Hello")
+  }
 }

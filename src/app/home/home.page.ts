@@ -14,6 +14,7 @@ export class HomePage {
   }]
 
   qrInfo = JSON.stringify(this.item);
-  constructor() {}
+  constructor() {
+   }
 
 }

@@ -8,10 +8,10 @@
 </ion-header>
 
 <ion-content>
-  <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+<!--   <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
       <div class="header-body">
-        <!-- Card stats -->
+         Card stats 
         <div class="row">
           <div class="col-xl-3 col-lg-6 col-sm-6"  (click)="openorderspage()">
             <div class="card card-stats mb-4 mb-xl-0">
@@ -119,18 +119,13 @@
             </div>
           </div>
           <div class="card-body">
-            <!-- Chart -->
+            Chart 
             <div class="chart">
-              <!-- Chart wrapper -->
+              Chart wrapper 
               <canvas id="chart-sales" class="chart-canvas"></canvas>
             </div>
           </div>
-          <ion-card>
-            <ion-card-header> Line Chart </ion-card-header>
-            <ion-card-content>
-              <canvas #lineCanvas></canvas>
-            </ion-card-content>
-          </ion-card> 
+          
         </div>
       </div>
       <div class="col-xl-4">
@@ -144,7 +139,7 @@
             </div>
           </div>
           <div class="card-body">
-            <!-- Chart -->
+            Chart
             <div class="chart">
               <canvas id="chart-orders" class="chart-canvas"></canvas>
             </div>
@@ -153,7 +148,12 @@
       </div>
     </div>
    
-  </div>
+  </div> -->
+  <app-dashboard-component [orders]="orderstoday" [customers]="customerbase" [complain]="complainlength"
+   [totalsales]="totalsales" [salestoday]="salestoday" [suggest]="suggestlength" (newEvent)="opencustomerspage($event)"
+   [topheader]="userheader" [altheader]="altheader" (newItemEvent)="openorderspage($event)"
+   (suggestEvent)="opensuggestpage($event)" (complainEvent)="opencomplainpage($event)"></app-dashboard-component>
+   
   <ion-fab slot="fixed" horizontal="end" vertical="bottom">
     <ion-fab-button color="secondary" (click)="openMenu()">
     <ion-icon name="add"></ion-icon>

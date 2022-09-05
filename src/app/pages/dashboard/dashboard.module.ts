@@ -8,6 +8,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
+import { DashboardComponent } from 'src/app/components/dashboard/dashboard.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { SidebarComponent } from 'src/app/components/sidebar/sidebar.component';
     IonicModule,
     DashboardPageRoutingModule
   ],
-  declarations: [DashboardPage,SidebarComponent]
+  declarations: [DashboardPage,SidebarComponent,DashboardComponent]
 })
 export class DashboardPageModule {}

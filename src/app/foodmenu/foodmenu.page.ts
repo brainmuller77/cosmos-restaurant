@@ -9,6 +9,7 @@ import {DeviceUUID} from 'src/assets/js/device-uuid'
 import { HomePage } from '../home/home.page';
 import { DashboardPage } from '../pages/dashboard/dashboard.page';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FoodorderPage } from '../foodorder/foodorder.page';
 
 @Component({
   selector: 'app-foodmenu',
@@ -21,6 +22,7 @@ export class FoodmenuPage implements OnInit {
   filterterm:string
   cartCostItem = 0
   load:boolean
+  loaded:boolean
   show:boolean = false
   segments: any[] = [
     { title: 'Menu List', value: 'menu' },
@@ -132,7 +134,7 @@ export class FoodmenuPage implements OnInit {
       userid:[''],
       title:['']
     })
-
+  
     this.uuid = new DeviceUUID().get();   
     this.server = this.serveService.server
     this.getItems()
@@ -158,7 +160,7 @@ export class FoodmenuPage implements OnInit {
 
   feedback(){
     if(this.form.valid){
-      this.load = true
+      this.loaded = true
       this.form.get('userid').setValue(this.uuid)
       this.serveService.post(this.form.value,"feedback").subscribe((res:any)=>{
         setTimeout(() => {
@@ -166,7 +168,7 @@ export class FoodmenuPage implements OnInit {
           //this.toast.presentToast("Please your order has been submitted we will get back to you shortly")
           this.serveService.alert("Feeback","Please we appreciate your feedback and promise to make things better the next time round. Thank you for staying with us.")
           this.basket = []
-          this.load = false
+          this.loaded = false
         }else{
          
             this.serveService.alert("Failed", "Order Failed Please Try Again")
@@ -279,7 +281,7 @@ export class FoodmenuPage implements OnInit {
   clearCart() {
     // Reduce back to initial quantity (1 vs 0 for re-add)
     this.basket.forEach(function (x) {
-      x.quantity = 1;
+      x.quantity = 0;
     });
     // Empty local ticket variable then sync
     this.basket = [];
