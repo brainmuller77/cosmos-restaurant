@@ -28,14 +28,14 @@ export class DashboardComponent implements OnInit {
   openorderspage(){
     this.newItemEvent.emit("hi");
   }
-  opencustomerspage(){
+  opencustomerspage($event){
     this.newEvent.emit("hi");
   }
-  opensuggestionpage(){
+  opensuggestionpage($event){
     this.suggestEvent.emit("hi");
   }
 
-  opencomplainpage(){
+  opencomplainpage($event){
     this.complainEvent.emit("hi");
   }
 }
