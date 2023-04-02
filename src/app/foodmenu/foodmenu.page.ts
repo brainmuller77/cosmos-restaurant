@@ -24,11 +24,14 @@ export class FoodmenuPage implements OnInit {
   load:boolean
   loaded:boolean
   show:boolean = false
+  public isCollapsed = true;
+
   segments: any[] = [
     { title: 'Menu List', value: 'menu' },
     { title: 'Cart', value: 'order' },
     { title: 'Feedback', value: 'feed' }, 
   ];
+  term:string
 
   discover:any[] = [
     {value:'burger'},
@@ -140,10 +143,11 @@ export class FoodmenuPage implements OnInit {
     this.getItems()
   }
 
-  hi(a){
-   let non:string = a;
-   this.filterterm = non
+  hi(){
+  
+   this.filterterm = this.term
    this.show =!this.show
+   
   }
 
   sser(){

@@ -63,7 +63,7 @@ export class DashboardPage implements OnInit {
     private modalController: ModalController,){
 
   }
-  async openorderspage(){
+  async openorderspage(event){
     const modal = await this.modalController.create({
       component: OrderlistPage,  
       
@@ -73,7 +73,7 @@ export class DashboardPage implements OnInit {
       return await modal.present();
   }
 
-  async opensuggestpage(){
+  async opensuggestpage(event){
     const modal = await this.modalController.create({
       component: FeedlistPage,  
       componentProps:{val:"suggestion"},
@@ -83,7 +83,7 @@ export class DashboardPage implements OnInit {
       return await modal.present();
   }
 
-  async opencomplainpage(){
+  async opencomplainpage(event){
     const modal = await this.modalController.create({
       component: FeedlistPage,  
       componentProps:{val:"complain"},
@@ -93,7 +93,7 @@ export class DashboardPage implements OnInit {
       return await modal.present();
   }
 
-  async opencustomerspage(){
+  async opencustomerspage(event){
     const modal = await this.modalController.create({
       component: FeedlistPage, 
       componentProps:{cust:this.customer,val:"customers"}, 

@@ -1,16 +1,18 @@
 <ion-header>
   <ion-toolbar color="secondary">
     <ion-title *ngIf="basket.length == 0"> </ion-title>
-    <ion-buttons slot="start">
-      <ion-avatar slot="start">
-        <img src="assets/images/laequ.jpeg">
-      </ion-avatar>
+    <ion-buttons slot="start">Select Category
+      <ion-select interface="action-sheet" [(ngModel)]="term" (ionChange)="hi()">
+        <ion-select-option *ngFor="let a of category" class="ion-text-capitalize nav-item" >
+          <ion-label>{{a}}</ion-label>  
+        </ion-select-option>
+        </ion-select>
     </ion-buttons>
     <ion-buttons slot="end">
      
       <ion-button [routerLink]="['/dashboard']"><ion-icon name="person"></ion-icon></ion-button>
       <ion-button (click)="register()"><ion-icon name="person-circle"></ion-icon></ion-button>
-
+     
     </ion-buttons>
     <div class="ion-text-center" *ngIf="basket.length > 0">Total Cost: {{(cartTotal)}}</div>
   </ion-toolbar>
@@ -35,20 +37,23 @@
       <ion-label>{{'Give Feedback'}}</ion-label>
     </ion-tab-button>
      </ion-segment-button>
-     </ion-segment>
+  </ion-segment>
 
 </ion-header>
-
+  
 <ion-content>
 
      <div *ngIf="activeSegment.value==='menu'">
+     
+     
+
     <section class="food_section layout_padding-bottom">
       <div class="container">
         <!-- <div class="heading_container heading_center">
           <img src="assets/images/laequ.jpeg">
         </div> -->
-  <ion-searchbar [(ngModel)]="filterterm"></ion-searchbar>
-        <ul class="filters_menu" >
+    <ion-searchbar [(ngModel)]="filterterm"></ion-searchbar>
+      <!--   <ul class="filters_menu" >
           <ion-chip class="active" color="primary" (click)="sser()">{{show?'Click to Close Categories':'Click to Open Categories'}}</ion-chip>
           <div *ngIf="show">
             <ion-card>
@@ -64,7 +69,7 @@
 
             </ion-col>
           </ion-row>
-        </ion-grid>
+        </ion-grid> -->
   
         <div class="filters-content">
           <div class="row grid">
@@ -194,57 +199,70 @@
        </section>
   </div>
        <div *ngIf="activeSegment.value === 'order'">
-        <!-- <div style="overflow-x:auto;">
-          <div class="c-table-responsive@wide" style="background-color:white">
-            <div style="min-height: 450px !important;">
-              <table class="table">
-                <thead class="table-hover">
-                  <tr class="table-row">
-                    <th class="table-row">Product</th>
-                    <th class="table-row">Quantity</th>
-                    <th class="">Change Qty</th>
-                    <th class="table-row">Cost</th>
-                   
-                  </tr>
-                 
-                </thead>
-                <tbody *ngIf="basket != ''">
-                  <tr class="table-row" *ngFor="let x of basket">
-                    <td class="c-table__cell text-center">{{ x.foodname}}</td>
-                    <td class="c-table__cell text-center">{{ x.quantity }}</td>
-                    <td class="c-table__cell">
-                      <ion-buttons slot="start">
-                      <ion-button class="c-btn c-btn--info c-btn--small action-btn" (click)="add(x)">
-                        <ion-icon name="add"></ion-icon>
-                      </ion-button>
-                      <ion-button class="c-btn c-btn--warning c-btn--small action-btn" (click)="reduce(x)">
-                        <ion-icon name="remove"></ion-icon>
-                      </ion-button>
-                      <ion-button class="c-btn c-btn--danger c-btn--small action-btn" (click)="remove(x)">
-                        <ion-icon name="close"></ion-icon>
-                      </ion-button>
-                    </ion-buttons>
-                    </td>
-                    <td class="c-table__cell text-center">{{x.cost}}</td>
-                    </tr>
-                    </tbody>
-                    <div *ngIf="basket.length == 0" class="ion-text-center">
-                      <p style="margin-left:50%;text-align:center">No Order Made</p>
-                    </div>
-                </table>
-                <div class="ion-text-center" *ngIf="basket.length > 0">
-                
-                  <ion-button  [disabled]="load" expand="true" shape="round" (click)="save()">
+        <div class="card-block p-b-10">
+          <div class="table-responsive">
+              <table class="table table-hover">
+                  <thead>
+                      <tr>
+                          <th></th>
+                          <th>Item</th>
+                          <th>Price</th>
+                          <th>Qty</th>
+                          <th>Cost</th>
+                          <th>Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody *ngFor="let i of basket">
                     
-                  {{load?'':'Order'}}<ion-spinner name="lines" *ngIf="load"></ion-spinner></ion-button>
-                </div>
-                </div>
-                </div>
-                </div> -->
+                      <tr>
+                          <td> 
+                                <ion-item >
+                                  <ion-avatar slot="start">
+                                    <img [src]="i.image" />
+                                  </ion-avatar>
+                                  </ion-item>
+                              
+                          </td>
+                          <td>
+                           {{i.foodname}}
+                          </td>
+                          <td>
+                          {{i.price}}
+                          </td>
+                      
+                          <td>
+                          {{i.quantity}}
+                          </td>
+                          <td>
+                           {{i.cost}}
+                          </td>
+                     
+                          <td>
+                           
+                              <ion-buttons slot="start">
+                                <ion-button color="success" (click)="add(i)">
+                                  <ion-icon name="add"></ion-icon>
+                                </ion-button>
+                                <ion-button color="warning" (click)="reduce(i)">
+                                  <ion-icon name="remove"></ion-icon>
+                                </ion-button>
+                                <ion-button color="danger" (click)="remove(i)">
+                                  <ion-icon name="close"></ion-icon>
+                                </ion-button>
+                              </ion-buttons>
+                             
+                            
+                          </td>
+                         
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
                 <div *ngIf="basket.length == 0" class="ion-text-center">
                   <p style="text-align:center">No Order Made</p>
                 </div>
-                <ion-card *ngFor="let i of basket">
+                <!-- <ion-card *ngFor="let i of basket" >
                   <ion-item >
                     <ion-avatar slot="start">
                       <img [src]="i.image" />
@@ -270,7 +288,7 @@
                     </ion-buttons>
                    </ion-item>
                   
-                </ion-card>
+                </ion-card> -->
 
                 <div class="ion-text-center" *ngIf="basket.length > 0">
                 

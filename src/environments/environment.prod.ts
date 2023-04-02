@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url: 'https://pawachat.com/restaurant/server/',
-  server: 'https://pawachat.com/restaurant/server/',
+  url: 'https://newlifepmi.org/restaurant/server/',
+  server: 'https://newlifepmi.org/restaurant/server/',
 };
